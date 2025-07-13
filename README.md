@@ -1,31 +1,42 @@
-# shadcn/ui monorepo template
+# Monopero Starter Template
 
-This template is for creating a monorepo with shadcn/ui.
+This is a minimal, modern monorepo template based on shadcn/ui, customized for fast development and scalability.
+
+## Features
+
+- Modular structure for web, server, and shared packages
+- Customizable UI components (`packages/ui`)
+- Tailwind CSS and PostCSS preconfigured
+- TypeScript everywhere
+- Ready for Next.js and NestJS
+- ESLint, TurboRepo, and PNPM workspace setup
+
+## Structure
+
+- `apps/web` – Next.js frontend
+- `server` – NestJS backend
+- `packages/ui` – Shared UI components
+- `packages/config` – Shared configs (ESLint, TypeScript)
+
+## Getting Started
+
+```bash
+pnpm install
+pnpm dev # Start all apps
+```
 
 ## Usage
 
-```bash
-pnpm dlx shadcn@latest init
-```
-
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
-
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
+Import UI components in your app:
 
 ```tsx
-import { Button } from "@workspace/ui/components/button"
+import { Button } from "@workspace/ui/components/button";
 ```
+
+## Customization
+
+Feel free to modify, extend, and organize the template to fit your workflow.
+
+---
+
+Made with ❤️ using shadcn/ui & Monopero

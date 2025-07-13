@@ -1,13 +1,12 @@
 {
-  "extends": "@workspace/config/typescript/react",
+  "extends": "@workspace/config/typescript/nest",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
-    "rootDir": ".",
     "paths": {
-      "@workspace/ui/*": ["src/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["."],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
