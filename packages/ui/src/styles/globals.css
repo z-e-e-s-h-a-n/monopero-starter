@@ -119,9 +119,20 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply !border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
   }
+  button {
+    @apply cursor-pointer;
+  }
+  img {
+    @apply max-w-full object-cover;
+  }
+}
+
+/* Utility class for flex-center */
+.flex-center {
+  @apply flex items-center justify-center;
 }

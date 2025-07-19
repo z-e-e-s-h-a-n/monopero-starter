@@ -23,6 +23,7 @@
     "onlyBuiltDependencies": [
       "@nestjs/core",
       "@swc/core",
+      "@tailwindcss/oxide",
       "core-js-pure",
       "esbuild",
       "sharp"
