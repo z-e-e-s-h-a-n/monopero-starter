@@ -1,0 +1,46 @@
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"LoggerModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"DiscoveryModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ScheduleModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PrismaModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PublicModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"EnvModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TemplateModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"SchedulerModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TokenModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"NotificationModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"RoutesResolver","level":"info","message":"PublicController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/health, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/auth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/signup, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/signin, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/signout, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/request-otp, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/validate-otp, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/reset-password, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/change-identifier, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/auth/change-identifier, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OAuthController {/oauth}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/oauth/google, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/oauth/google/callback, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/oauth/facebook, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/oauth/facebook/callback, GET} route"}
+{"context":"PrismaService","level":"info","message":"Connecting to the database..."}
+{"context":"PrismaService","level":"info","message":"✅ Database connection established."}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"=========================================="}
+{"level":"info","message":"🚀 Server started successfully!"}
+{"level":"info","message":"🌐 Endpoint: http://localhost:4000"}
+{"level":"info","message":"🔒 Environment: development"}
+{"level":"info","message":"📦 Listening on port: 4000"}
+{"level":"info","message":"⏱️ Startup time: 533ms"}
+{"level":"info","message":"🪵 Logger initialized with Winston (see logs directory if enabled)"}
+{"level":"info","message":"=========================================="}
