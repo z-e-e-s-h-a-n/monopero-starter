@@ -1,4 +1,17 @@
 import { z } from "zod";
+import ms, { type StringValue } from "ms";
+
+const zMsString = z
+  .string()
+  .transform((val) => val as StringValue)
+  .refine((val) => {
+    try {
+      const parsed = ms(val);
+      return typeof parsed === "number" && parsed > 0;
+    } catch {
+      return false;
+    }
+  }, "Invalid ms() duration string");
 
 export const envSchema = z.object({
   // ==============================
@@ -23,15 +36,15 @@ export const envSchema = z.object({
   // ==============================
   // OTP Model
   // ==============================
-  OTP_EXP: z.string(),
+  OTP_EXP: zMsString,
 
   // ==============================
   // Auth
   // ==============================
   JWT_ACCESS_SECRET: z.string(),
   JWT_REFRESH_SECRET: z.string(),
-  ACCESS_TOKEN_EXP: z.string(),
-  REFRESH_TOKEN_EXP: z.string(),
+  ACCESS_TOKEN_EXP: zMsString,
+  REFRESH_TOKEN_EXP: zMsString,
 
   // ==============================
   // OAuth Providers
