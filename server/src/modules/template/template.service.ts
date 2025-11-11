@@ -16,12 +16,9 @@ export class TemplateService {
     verifyIdentifier: templates.verifyIdentifierTemplate,
     setPassword: templates.setPasswordTemplate,
     resetPassword: templates.resetPasswordTemplate,
-    changeIdentifierReq: templates.changeIdentifierReqTemplate,
     changeIdentifier: templates.changeIdentifierTemplate,
     verifyMfa: templates.verifyMfaTemplate,
-    enableMfaReq: templates.enableMfaReqTemplate,
     enableMfa: templates.enableMfaTemplate,
-    disableMfaReq: templates.disableMfaReqTemplate,
     disableMfa: templates.disableMfaTemplate,
   };
 

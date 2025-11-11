@@ -2,7 +2,7 @@
 CREATE TYPE "UserRole" AS ENUM ('admin', 'customer');
 
 -- CreateEnum
-CREATE TYPE "OtpPurpose" AS ENUM ('setPassword', 'resetPassword', 'verifyIdentifier', 'changeIdentifierReq', 'changeIdentifier', 'enableMfaReq', 'enableMfa', 'disableMfaReq', 'disableMfa', 'verifyMfa');
+CREATE TYPE "OtpPurpose" AS ENUM ('setPassword', 'resetPassword', 'verifyIdentifier', 'changeIdentifier', 'enableMfa', 'disableMfa', 'verifyMfa');
 
 -- CreateEnum
 CREATE TYPE "OtpType" AS ENUM ('otp', 'token');
@@ -69,7 +69,6 @@ CREATE TABLE "BackupCode" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "code" TEXT NOT NULL,
-    "isUsed" BOOLEAN NOT NULL DEFAULT false,
     "usedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expiresAt" TIMESTAMP(3) NOT NULL,
@@ -101,7 +100,7 @@ CREATE TABLE "Otp" (
     "type" "OtpType" NOT NULL DEFAULT 'otp',
     "secret" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
-    "isUsed" BOOLEAN NOT NULL DEFAULT false,
+    "usedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -166,7 +165,7 @@ CREATE INDEX "SecuritySetting_isMfaEnabled_idx" ON "SecuritySetting"("isMfaEnabl
 CREATE UNIQUE INDEX "BackupCode_code_key" ON "BackupCode"("code");
 
 -- CreateIndex
-CREATE INDEX "BackupCode_userId_isUsed_idx" ON "BackupCode"("userId", "isUsed");
+CREATE INDEX "BackupCode_userId_usedAt_idx" ON "BackupCode"("userId", "usedAt");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "RefreshToken_token_key" ON "RefreshToken"("token");

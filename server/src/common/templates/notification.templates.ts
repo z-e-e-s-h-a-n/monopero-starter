@@ -17,7 +17,7 @@ const buttonStyles = `
   font-weight:bold;
 `;
 
-export const appName = "Your App Name";
+const appName = "Evorii";
 
 export interface TemplateProps {
   user: User;
@@ -28,9 +28,6 @@ export interface TemplateProps {
   message?: string;
 }
 
-/* -----------------------------------------------------------
- *  SIGNUP
- * --------------------------------------------------------- */
 export const signupTemplate = ({ user }: TemplateProps) => ({
   subject: `🎉 Welcome to ${appName}, ${user.displayName}!`,
   html: `
@@ -44,9 +41,6 @@ export const signupTemplate = ({ user }: TemplateProps) => ({
   text: `Welcome to ${appName}, ${user.displayName}! Let's create something meaningful together.`,
 });
 
-/* -----------------------------------------------------------
- *  SIGNIN
- * --------------------------------------------------------- */
 export const signinTemplate = ({ user }: TemplateProps) => ({
   subject: `🔐 Login Successful — ${appName}`,
   html: `
@@ -60,9 +54,6 @@ export const signinTemplate = ({ user }: TemplateProps) => ({
   text: `Hi ${user.displayName}, you’ve logged in to ${appName}. If this wasn’t you, reset your password right away.`,
 });
 
-/* -----------------------------------------------------------
- *  SET PASSWORD
- * --------------------------------------------------------- */
 export const setPasswordTemplate = ({
   user,
   otp,
@@ -84,9 +75,6 @@ export const setPasswordTemplate = ({
   };
 };
 
-/* -----------------------------------------------------------
- *  RESET PASSWORD
- * --------------------------------------------------------- */
 export const resetPasswordTemplate = ({
   user,
   otp,
@@ -109,9 +97,6 @@ export const resetPasswordTemplate = ({
   };
 };
 
-/* -----------------------------------------------------------
- *  VERIFY IDENTIFIER (EMAIL / PHONE)
- * --------------------------------------------------------- */
 export const verifyIdentifierTemplate = ({
   user,
   otp,
@@ -133,53 +118,45 @@ export const verifyIdentifierTemplate = ({
   };
 };
 
-/* -----------------------------------------------------------
- *  CHANGE IDENTIFIER REQUEST
- * --------------------------------------------------------- */
-export const changeIdentifierReqTemplate = ({
-  user,
-  otp,
-  identifier,
-}: TemplateProps) => ({
-  subject: `📨 Confirm Change Request — ${appName}`,
-  html: `
-    <div style="${baseStyles}">
-      <h2>Hi ${user.displayName},</h2>
-      <p>We received a request to change your ${identifier?.includes("@") ? "email address" : "phone number"}.</p>
-      <p>Use the OTP below to confirm your request:</p>
-      <h3>${otp?.secret}</h3>
-      <p>If you didn’t make this request, please secure your account immediately.</p>
-    </div>
-  `,
-  text: `Hi ${user.displayName}, your OTP to confirm the change request is ${otp?.secret}.`,
-});
-
-/* -----------------------------------------------------------
- *  CHANGE IDENTIFIER CONFIRMATION
- * --------------------------------------------------------- */
 export const changeIdentifierTemplate = ({
   user,
   otp,
+  identifier,
   newIdentifier,
   env,
 }: TemplateProps) => {
-  const link = `${env?.get("CLIENT_ENDPOINT")}/confirm-change?identifier=${newIdentifier}&purpose=${otp?.purpose}&secret=${otp?.secret}&type=${otp?.type}`;
-  return {
-    subject: `🔗 Verify Your New ${newIdentifier?.includes("@") ? "Email" : "Phone"} — ${appName}`,
-    html: `
-      <div style="${baseStyles}">
-        <h2>Hi ${user.displayName},</h2>
-        <p>Click below to confirm your new ${newIdentifier?.includes("@") ? "email address" : "phone number"}.</p>
-        <a href="${link}" style="${buttonStyles}">Verify Now</a>
-      </div>
-    `,
-    text: `Hi ${user.displayName}, verify your new identifier here: ${link}`,
-  };
+  if (otp) {
+    // OTP exists → request confirmation phase
+    const link = `${env?.get("CLIENT_ENDPOINT")}/confirm-change?identifier=${newIdentifier}&purpose=${otp.purpose}&secret=${otp.secret}&type=${otp.type}`;
+    return {
+      subject: `📨 Confirm Change Request — ${appName}`,
+      html: `
+        <div style="${baseStyles}">
+          <h2>Hi ${user.displayName},</h2>
+          <p>We received a request to change your ${identifier?.includes("@") ? "email address" : "phone number"}.</p>
+          <p>Your one-time code: <strong>${otp.secret}</strong></p>
+          <a href="${link}" style="${buttonStyles}">Confirm Change</a>
+          <p>If you didn’t make this request, please secure your account immediately.</p>
+        </div>
+      `,
+      text: `Hi ${user.displayName}, OTP: ${otp.secret}. Confirm your change here: ${link}`,
+    };
+  } else {
+    // No OTP → confirmation phase
+    return {
+      subject: `✅ ${identifier?.includes("@") ? "Email" : "Phone"} Changed Successfully — ${appName}`,
+      html: `
+        <div style="${baseStyles}">
+          <h2>Hi ${user.displayName},</h2>
+          <p>Your ${identifier?.includes("@") ? "email address" : "phone number"} has been successfully updated to <strong>${newIdentifier}</strong>.</p>
+          <p>If this wasn’t you, please update your credentials immediately.</p>
+        </div>
+      `,
+      text: `Hi ${user.displayName}, your ${identifier?.includes("@") ? "email" : "phone"} has been updated to ${newIdentifier}.`,
+    };
+  }
 };
 
-/* -----------------------------------------------------------
- *  MFA / SECURITY
- * --------------------------------------------------------- */
 export const verifyMfaTemplate = ({ user, otp }: TemplateProps) => ({
   subject: `📲 Your ${appName} 2FA Code`,
   html: `
@@ -193,57 +170,66 @@ export const verifyMfaTemplate = ({ user, otp }: TemplateProps) => ({
   text: `Hi ${user.displayName}, your 2FA code is ${otp?.secret}.`,
 });
 
-export const enableMfaReqTemplate = ({ user, otp }: TemplateProps) => ({
-  subject: `🔑 Enable 2FA — OTP Required (${appName})`,
-  html: `
-    <div style="${baseStyles}">
-      <h2>Hi ${user.displayName},</h2>
-      <p>Use the following code to enable 2FA for your ${appName} account:</p>
-      <h3>${otp?.secret}</h3>
-      <p>It expires soon. Please do not share this code.</p>
-    </div>
-  `,
-  text: `Hi ${user.displayName}, use OTP ${otp?.secret} to enable 2FA.`,
-});
+export const enableMfaTemplate = ({ user, otp }: TemplateProps) => {
+  if (otp) {
+    // OTP exists → request confirmation
+    return {
+      subject: `🔑 Enable 2FA — OTP Required (${appName})`,
+      html: `
+        <div style="${baseStyles}">
+          <h2>Hi ${user.displayName},</h2>
+          <p>Use the following code to enable 2FA for your ${appName} account:</p>
+          <h3>${otp.secret}</h3>
+          <p>It expires soon. Do not share this code.</p>
+        </div>
+      `,
+      text: `Hi ${user.displayName}, use OTP ${otp.secret} to enable 2FA.`,
+    };
+  } else {
+    // No OTP → success message
+    return {
+      subject: `✅ 2FA Enabled — ${appName}`,
+      html: `
+        <div style="${baseStyles}">
+          <h2>Hi ${user.displayName},</h2>
+          <p>You’ve successfully enabled two-factor authentication on your ${appName} account. Great job strengthening your security!</p>
+        </div>
+      `,
+      text: `Hi ${user.displayName}, 2FA has been enabled on your account.`,
+    };
+  }
+};
 
-export const disableMfaReqTemplate = ({ user, otp }: TemplateProps) => ({
-  subject: `🔑 Disable 2FA — OTP Required (${appName})`,
-  html: `
-    <div style="${baseStyles}">
-      <h2>Hi ${user.displayName},</h2>
-      <p>Use this OTP to disable 2FA on your ${appName} account:</p>
-      <h3>${otp?.secret}</h3>
-      <p>If this wasn’t you, please secure your account immediately.</p>
-    </div>
-  `,
-  text: `Hi ${user.displayName}, OTP to disable 2FA: ${otp?.secret}.`,
-});
+export const disableMfaTemplate = ({ user, otp }: TemplateProps) => {
+  if (otp) {
+    // OTP exists → confirmation needed
+    return {
+      subject: `🔑 Disable 2FA — OTP Required (${appName})`,
+      html: `
+        <div style="${baseStyles}">
+          <h2>Hi ${user.displayName},</h2>
+          <p>Use this code to disable 2FA on your ${appName} account:</p>
+          <h3>${otp.secret}</h3>
+          <p>If this wasn’t you, secure your account immediately.</p>
+        </div>
+      `,
+      text: `Hi ${user.displayName}, your OTP to disable 2FA is ${otp.secret}.`,
+    };
+  } else {
+    // No OTP → confirmation
+    return {
+      subject: `⚠️ 2FA Disabled — ${appName}`,
+      html: `
+        <div style="${baseStyles}">
+          <h2>Hi ${user.displayName},</h2>
+          <p>Two-factor authentication has been disabled on your ${appName} account. If this wasn’t you, please re-enable it immediately.</p>
+        </div>
+      `,
+      text: `Hi ${user.displayName}, 2FA has been disabled. If this wasn’t you, secure your account.`,
+    };
+  }
+};
 
-export const enableMfaTemplate = ({ user }: TemplateProps) => ({
-  subject: `✅ 2FA Enabled — ${appName}`,
-  html: `
-    <div style="${baseStyles}">
-      <h2>Hi ${user.displayName},</h2>
-      <p>You’ve successfully enabled two-factor authentication for your ${appName} account. Great choice — your account is now more secure.</p>
-    </div>
-  `,
-  text: `Hi ${user.displayName}, 2FA has been enabled on your account.`,
-});
-
-export const disableMfaTemplate = ({ user }: TemplateProps) => ({
-  subject: `⚠️ 2FA Disabled — ${appName}`,
-  html: `
-    <div style="${baseStyles}">
-      <h2>Hi ${user.displayName},</h2>
-      <p>Two-factor authentication has been disabled on your ${appName} account. If you didn’t do this, please re-enable it immediately.</p>
-    </div>
-  `,
-  text: `Hi ${user.displayName}, 2FA has been disabled. If this wasn’t you, secure your account.`,
-});
-
-/* -----------------------------------------------------------
- *  SECURITY ALERT
- * --------------------------------------------------------- */
 export const securityAlertTemplate = ({ user, message }: TemplateProps) => ({
   subject: `⚠️ Security Alert — ${appName}`,
   html: `

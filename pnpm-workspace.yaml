@@ -14,3 +14,4 @@ onlyBuiltDependencies:
   - "@prisma/client"
   - "@prisma/engines"
   - "prisma"
+  - argon2

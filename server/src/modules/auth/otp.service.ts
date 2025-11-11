@@ -48,7 +48,7 @@ export class OtpService {
         userId,
         purpose,
         type,
-        isUsed: false,
+        usedAt: null,
         expiresAt: { gt: new Date() },
       },
     });
@@ -92,7 +92,7 @@ export class OtpService {
         secret,
         purpose,
         type,
-        isUsed: false,
+        usedAt: null,
         expiresAt: { gt: new Date() },
       },
     });
@@ -108,7 +108,7 @@ export class OtpService {
 
     await this.prisma.otp.update({
       where: { id: otp.id },
-      data: { isUsed: true },
+      data: { usedAt: new Date() },
     });
 
     this.logger.log(`✅ OTP verified`, {

@@ -18,16 +18,12 @@ enum UserRole {
   customer
 }
 
-// TODO Remove Duplicate Purposes Req 
 enum OtpPurpose {
   setPassword
   resetPassword
   verifyIdentifier
-  changeIdentifierReq
   changeIdentifier
-  enableMfaReq
   enableMfa
-  disableMfaReq
   disableMfa
   verifyMfa
 }
@@ -136,12 +132,11 @@ model BackupCode {
   userId    String
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   code      String    @unique
-  isUsed    Boolean   @default(false)
   usedAt    DateTime?
   createdAt DateTime  @default(now())
   expiresAt DateTime
 
-  @@index([userId, isUsed])
+  @@index([userId, usedAt])
 }
 
 model RefreshToken {
@@ -170,7 +165,7 @@ model Otp {
   type      OtpType    @default(otp)
   secret    String
   expiresAt DateTime
-  isUsed    Boolean    @default(false)
+  usedAt    DateTime?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
