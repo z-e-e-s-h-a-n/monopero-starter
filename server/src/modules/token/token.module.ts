@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TokenService } from "./token.service";
 import { JwtModule } from "@nestjs/jwt";
-import { CookieService } from "@/lib/actions/cookie.action";
+import { CookieService } from "@utils/cookie.util";
 
 @Module({
   imports: [JwtModule.register({})],

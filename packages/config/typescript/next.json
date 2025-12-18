@@ -3,7 +3,7 @@
   "display": "NextJS Config",
   "extends": "./base.json",
   "compilerOptions": {
-    "lib": ["es2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "plugins": [{ "name": "next" }]
   }

@@ -3,16 +3,16 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { PrismaService } from "@/modules/prisma/prisma.service";
-import { LoggerService } from "@/modules/logger/logger.service";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import { PrismaService } from "@modules/prisma/prisma.service";
+import { LoggerService } from "@modules/logger/logger.service";
+import { InjectLogger } from "@decorators/logger.decorator";
 import crypto from "crypto";
-import { expiryDate } from "@/lib/utils/general.util";
+import { expiryDate } from "@utils/general.util";
 import type { Request } from "express";
 import type {
   UpdateSecuritySettingDto,
   VerifyBackupCodeDto,
-} from "@/common/dto/security-setting.dto";
+} from "@dto/security-setting.dto";
 
 @Injectable()
 export class SecuritySettingService {

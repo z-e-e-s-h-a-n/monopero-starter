@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { expiryDate } from "@/lib/utils/general.util";
-import { PrismaService } from "@/modules/prisma/prisma.service";
-import { UserRole } from "@prisma/client";
-import { EnvService } from "@/modules/env/env.service";
+import { expiryDate } from "@utils/general.util";
+import { PrismaService } from "@modules/prisma/prisma.service";
+import { UserRole } from "@generated/prisma";
+import { EnvService } from "@modules/env/env.service";
 import type { Request, Response } from "express";
-import { CookieService } from "@/lib/actions/cookie.action";
+import { CookieService } from "@utils/cookie.util";
 
 export interface TokenPayload {
   sub: string;

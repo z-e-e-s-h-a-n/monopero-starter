@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { EnvService } from "@/modules//env/env.service";
+import { EnvService } from "@modules//env/env.service";
 
-import * as templates from "@/templates/notification.templates";
+import * as templates from "@templates/notification.templates";
 
 @Injectable()
 export class TemplateService {

@@ -1,24 +1,19 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import "@workspace/ui/globals.css";
 import "./globals.css";
 import Provider from "@/providers";
 
-const fontSans = Geist({
+const primaryFont = Inter({
+  variable: "--font-primary",
   subsets: ["latin"],
-  variable: "--font-sans",
 });
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
-
-function RootLayout({ children }: LayoutProps) {
+const RootLayout = ({ children }: LayoutProps) => {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
+        className={`${primaryFont.variable} font-sans antialiased `}
       >
         <Provider>{children}</Provider>
       </body>

@@ -1,9 +1,9 @@
 import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { Public } from "@/decorators/public.decorator";
+import { Public } from "@decorators/public.decorator";
 import type { Request, Response } from "express";
-import { TokenService } from "@/modules/token/token.service";
-import { PrismaService } from "@/modules/prisma/prisma.service";
+import { TokenService } from "@modules/token/token.service";
+import { PrismaService } from "@modules/prisma/prisma.service";
 
 @Controller("oauth")
 export class OAuthController {

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { LoggerService } from "@/modules/logger/logger.service";
+import { LoggerService } from "@modules/logger/logger.service";
 import type { Request } from "express";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import { InjectLogger } from "@decorators/logger.decorator";
 
 @Injectable()
 export class PublicService {

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import type { EnvSchema } from "@/schemas/env.schema";
-import { LoggerService } from "@/modules/logger/logger.service";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import type { EnvSchema } from "@schemas/env.schema";
+import { LoggerService } from "@modules/logger/logger.service";
+import { InjectLogger } from "@decorators/logger.decorator";
 
 @Injectable()
 export class EnvService {

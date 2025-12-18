@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { Resend } from "resend";
-import { EnvService } from "@/modules/env/env.service";
-import { NotificationStatus, NotificationType, Prisma } from "@prisma/client";
-import { PrismaService } from "@/modules/prisma/prisma.service";
-import { TemplateService } from "@/modules/template/template.service";
-import { LoggerService } from "@/modules/logger/logger.service";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import { EnvService } from "@modules/env/env.service";
+import { NotificationStatus, NotificationType, Prisma } from "@generated/prisma";
+import { PrismaService } from "@modules/prisma/prisma.service";
+import { TemplateService } from "@modules/template/template.service";
+import { LoggerService } from "@modules/logger/logger.service";
+import { InjectLogger } from "@decorators/logger.decorator";
 
 interface SendNotificationProps {
   userId: string;

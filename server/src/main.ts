@@ -1,13 +1,13 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "@/app.module";
 import cookieParser from "cookie-parser";
-import { GlobalValidationPipe } from "@/pipes/validation.pipe";
-import { AllExceptionsFilter } from "@/filters/exceptions.filter";
-import { ResponseInterceptor } from "@/interceptors/response.interceptor";
-import { EnvService } from "@/modules/env/env.service";
-import { LoggerService } from "./modules/logger/logger.service";
+import { GlobalValidationPipe } from "@pipes/validation.pipe";
+import { AllExceptionsFilter } from "@filters/exceptions.filter";
+import { ResponseInterceptor } from "@/lib/interceptors/response.interceptor";
+import { EnvService } from "@modules/env/env.service";
+import { LoggerService } from "@modules/logger/logger.service";
 import { WinstonModule } from "nest-winston";
-import { winstonConfig } from "./modules/logger/winston.config";
+import { winstonConfig } from "@modules/logger/winston.config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

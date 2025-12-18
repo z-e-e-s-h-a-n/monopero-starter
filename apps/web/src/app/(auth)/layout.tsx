@@ -1,6 +1,6 @@
 import React from "react";
 
-function AuthLayout({ children }: LayoutProps) {
+const AuthLayout = ({ children }: LayoutProps) => {
   return <div>{children}</div>;
 }
 

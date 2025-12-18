@@ -1,4 +1,4 @@
-import { OrderStatus, OtpPurpose } from "@prisma/client";
+import { OrderStatus, OtpPurpose } from "@generated/prisma";
 
 declare global {
   type IdentifierKey = "email" | "phone";

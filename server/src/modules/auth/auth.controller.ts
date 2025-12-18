@@ -7,9 +7,9 @@ import {
   SignInDto,
   SignUpDto,
   ValidateOtpDto,
-} from "@/dto/auth.dto";
+} from "@dto/auth.dto";
 import type { Request, Response } from "express";
-import { Public } from "@/decorators/public.decorator";
+import { Public } from "@decorators/public.decorator";
 
 @Controller("auth")
 export class AuthController {

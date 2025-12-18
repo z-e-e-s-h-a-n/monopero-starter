@@ -1,12 +1,12 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { OtpPurpose, OtpType } from "@prisma/client";
-import { PrismaService } from "@/modules/prisma/prisma.service";
-import { NotificationService } from "@/modules/notification/notification.service";
-import { expiryDate } from "@/lib/utils/general.util";
-import { EnvService } from "@/modules/env/env.service";
+import { PrismaService } from "@modules/prisma/prisma.service";
+import { NotificationService } from "@modules/notification/notification.service";
+import { expiryDate } from "@utils/general.util";
+import { EnvService } from "@modules/env/env.service";
 import crypto from "crypto";
-import { LoggerService } from "@/modules/logger/logger.service";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import { LoggerService } from "@modules/logger/logger.service";
+import { InjectLogger } from "@decorators/logger.decorator";
 
 interface SendOtpPayload {
   userId: string;

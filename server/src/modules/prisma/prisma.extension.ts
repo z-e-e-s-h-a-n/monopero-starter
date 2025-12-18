@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@generated/prisma";
 
 const hasDeletedAt = (model: string) => {
   const dmmf = Prisma.dmmf.datamodel.models;

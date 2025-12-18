@@ -1,8 +1,10 @@
 import type { OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { Injectable } from "@nestjs/common";
-import { PrismaClient } from "@prisma/client";
-import { LoggerService } from "@/modules/logger/logger.service";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import { PrismaClient } from "@generated/prisma";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+import { LoggerService } from "@modules/logger/logger.service";
+import { InjectLogger } from "@decorators/logger.decorator";
 import { softDeleteExtension } from "./prisma.extension";
 
 @Injectable()
@@ -13,15 +15,15 @@ export class PrismaService
   @InjectLogger()
   private readonly logger!: LoggerService;
 
-  constructor() {
-    super({});
-    console.log("🚀 Initializing PrismaService with softDeleteExtension...");
+constructor() {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DB_URI!,
+  });
 
-    // ✅ Properly apply the extension
-    Object.assign(this, this.$extends(softDeleteExtension));
+  super({ adapter });
 
-    console.log("✅ Prisma soft delete extension applied successfully!");
-  }
+  Object.assign(this, this.$extends(softDeleteExtension));
+}
 
   async onModuleInit() {
     this.logger.log("Connecting to the database...");
@@ -40,7 +42,7 @@ export class PrismaService
       await this.$disconnect();
       this.logger.log("Database connection closed.");
     } catch (error) {
-      this.logger.error("❌ Error Disconnecting Database", { error });
+      this.logger.error("❌ Error disconnecting database", { error });
       throw error;
     }
   }

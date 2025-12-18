@@ -5,14 +5,17 @@
     "outDir": "dist",
     "paths": {
       "@/*": ["src/*"],
-      "@/decorators/*": ["src/common/decorators/*"],
-      "@/dto/*": ["src/common/dto/*"],
-      "@/filters/*": ["src/common/filters/*"],
-      "@/guards/*": ["src/common/guards/*"],
-      "@/interceptors/*": ["src/common/interceptors/*"],
-      "@/pipes/*": ["src/common/pipes/*"],
-      "@/schemas/*": ["src/common/schemas/*"],
-      "@/templates/*": ["src/common/templates/*"]
+      "@modules/*" : ["src/modules/*"],
+      "@decorators/*": ["src/lib/decorators/*"],
+      "@dto/*": ["src/lib/dto/*"],
+      "@filters/*": ["src/lib/filters/*"],
+      "@guards/*": ["src/lib/guards/*"],
+      "@interceptors/*": ["src/lib/interceptors/*"],
+      "@pipes/*": ["src/lib/pipes/*"],
+      "@schemas/*": ["src/lib/schemas/*"],
+      "@templates/*": ["templates/*"],
+      "@utils/*": ["src/lib/utils/*"],
+      "@generated/prisma": ["./prisma/generated/client"]
     }
   },
   "include": ["**/*.ts"],

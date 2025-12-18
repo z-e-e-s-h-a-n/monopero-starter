@@ -5,7 +5,7 @@ import {
 } from "@nestjs/common";
 import type { Request, Response } from "express";
 import argon2 from "argon2";
-import { PrismaService } from "@/modules/prisma/prisma.service";
+import { PrismaService } from "@modules/prisma/prisma.service";
 import {
   ChangeIdentifierDto,
   RequestOtpDto,
@@ -13,13 +13,13 @@ import {
   SignInDto,
   SignUpDto,
   ValidateOtpDto,
-} from "@/dto/auth.dto";
-import { TokenService } from "@/modules/token/token.service";
-import { Prisma, type User } from "@prisma/client";
+} from "@dto/auth.dto";
+import { TokenService } from "@modules/token/token.service";
+import { Prisma, type User } from "@generated/prisma";
 import { OtpService } from "./otp.service";
-import { NotificationService } from "@/modules/notification/notification.service";
-import { LoggerService } from "@/modules/logger/logger.service";
-import { InjectLogger } from "@/common/decorators/logger.decorator";
+import { NotificationService } from "@modules/notification/notification.service";
+import { LoggerService } from "@modules/logger/logger.service";
+import { InjectLogger } from "@decorators/logger.decorator";
 
 @Injectable()
 export class AuthService {

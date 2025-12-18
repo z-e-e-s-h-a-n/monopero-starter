@@ -12,10 +12,10 @@ import {
   Strategy as FacebookStrategy,
   type Profile as FacebookProfile,
 } from "passport-facebook";
-import { EnvService } from "@/modules/env/env.service";
-import { PrismaService } from "@/modules/prisma/prisma.service";
+import { EnvService } from "@modules/env/env.service";
+import { PrismaService } from "@modules/prisma/prisma.service";
 import { OtpService } from "./otp.service";
-import { NotificationService } from "@/modules/notification/notification.service";
+import { NotificationService } from "@modules/notification/notification.service";
 
 interface NormalizedProfile {
   provider: "google" | "facebook";
