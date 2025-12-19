@@ -53,6 +53,14 @@ async function main() {
   pkg.name = targetDir;
   await fs.writeJson(pkgPath, pkg, { spaces: 2 });
 
+  // rename gitignore to .gitignore
+  const gitignoreSrc = path.join(projectPath, "gitignore");
+  const gitignoreDest = path.join(projectPath, ".gitignore");
+
+  if (fs.existsSync(gitignoreSrc)) {
+    fs.renameSync(gitignoreSrc, gitignoreDest);
+  }
+
   // Init git
   process.chdir(projectPath);
   execSync("git init", { stdio: "ignore" });
@@ -61,13 +69,6 @@ async function main() {
 
   if (gitRemote) {
     execSync(`git remote add origin ${gitRemote}`, { stdio: "ignore" });
-  }
-
-  const gitignoreSrc = path.join(projectPath, "gitignore");
-  const gitignoreDest = path.join(projectPath, ".gitignore");
-
-  if (fs.existsSync(gitignoreSrc)) {
-    fs.renameSync(gitignoreSrc, gitignoreDest);
   }
 
   console.log(green("✅ Project ready!"));
