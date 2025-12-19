@@ -25,6 +25,33 @@ pnpm install
 pnpm dev # Start all apps
 ```
 
+````
+
+## Database Setup
+
+1. Edit the `.env` file in the `server` directory:
+
+```env
+DB_URI="postgresql://username:password@localhost:5432/your-db-name"
+```
+
+Replace `username`, `password`, and `your-db-name` with your PostgreSQL credentials and the desired database name.
+
+2. Navigate to the server folder:
+
+```bash
+cd server
+```
+
+3. Run Prisma commands to set up the database and generate the client:
+
+```bash
+pnpm prisma:migrate:dev
+pnpm prisma:generate
+```
+
+> Note: Make sure your PostgreSQL server is running and accessible with the credentials you set.
+
 ## Usage
 
 Import UI components in your app:
@@ -40,3 +67,4 @@ Feel free to modify, extend, and organize the template to fit your workflow.
 ---
 
 Made with ❤️ using shadcn/ui & Monorepo
+````
