@@ -1,6 +1,6 @@
 {
   "name": "create-zhx-monorepo",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Create a ZHX monorepo with one command",
   "bin": {
     "create-zhx-monorepo": "bin/index.js"
