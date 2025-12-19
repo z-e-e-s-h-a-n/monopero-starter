@@ -1,23 +1,18 @@
 {
-  "name": "zhx-monorepo",
-  "version": "0.0.1",
+  "name": "create-zhx-monopero",
+  "version": "0.1.0",
+  "description": "Create a ZHX monorepo with one command",
+  "bin": {
+    "create-zhx-monopero": "bin/index.js"
+  },
   "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "update:deps": "pnpm update -r --latest"
-  },
-  "devDependencies": {
-    "@workspace/config": "workspace:*",
-    "prettier": "^3.7.4",
-    "turbo": "^2.6.3",
-    "typescript": "5.9.3"
-  },
-  "packageManager": "pnpm@10.26.0",
+  "license": "MIT",
   "engines": {
-    "node": ">=24"
+    "node": ">=18"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.3",
+    "prompts": "^2.4.2",
+    "kolorist": "^1.8.0"
   }
 }
