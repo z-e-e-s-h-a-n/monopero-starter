@@ -9,7 +9,22 @@ import { execSync } from "child_process";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-async function main() {
+const replaceDbName = async (filePath, projectName) => {
+  if (!(await fs.pathExists(filePath))) return;
+
+  let content = await fs.readFile(filePath, "utf-8");
+  content = content.replace(
+    /postgresql:\/\/([^/]+)\/your-proj/g,
+    `postgresql://$1/${projectName}`
+  );
+  await fs.writeFile(filePath, content);
+};
+
+const normalizeProjectName = (name) => {
+  return name.trim().toLowerCase().replace(/\s+/g, "-");
+};
+
+const main = async () => {
   let targetDir = process.argv[2];
 
   if (!targetDir) {
@@ -19,14 +34,16 @@ async function main() {
       message: "Project name:",
       validate: (value) => (value ? true : "Project name cannot be empty"),
     });
+
     targetDir = response.targetDir;
 
     if (!targetDir) {
       console.log(red("❌ No project name provided."));
-      console.log(red("Exiting..."));
       process.exit(1);
     }
   }
+
+  targetDir = normalizeProjectName(targetDir);
 
   const projectPath = path.resolve(process.cwd(), targetDir);
 
@@ -53,13 +70,32 @@ async function main() {
   pkg.name = targetDir;
   await fs.writeJson(pkgPath, pkg, { spaces: 2 });
 
-  // rename gitignore to .gitignore
+  // Rename gitignore
   const gitignoreSrc = path.join(projectPath, "gitignore");
   const gitignoreDest = path.join(projectPath, ".gitignore");
-
   if (fs.existsSync(gitignoreSrc)) {
     fs.renameSync(gitignoreSrc, gitignoreDest);
   }
+
+  // --- SERVER SETUP ---
+  const serverDir = path.join(projectPath, "server");
+  const prismaDir = path.join(serverDir, "prisma");
+
+  // Remove prisma folders
+  await fs.remove(path.join(prismaDir, "migrations"));
+  await fs.remove(path.join(prismaDir, "generated"));
+
+  // Create .env from example
+  const envExamplePath = path.join(serverDir, ".env.example");
+  const envPath = path.join(serverDir, ".env");
+
+  if (await fs.pathExists(envExamplePath)) {
+    await fs.copy(envExamplePath, envPath);
+  }
+
+  // Replace DB name
+  await replaceDbName(envExamplePath, targetDir);
+  await replaceDbName(envPath, targetDir);
 
   // Init git
   process.chdir(projectPath);
@@ -71,12 +107,18 @@ async function main() {
     execSync(`git remote add origin ${gitRemote}`, { stdio: "ignore" });
   }
 
+  // Run Prisma commands
+  console.log(cyan("🧬 Running Prisma setup..."));
+  process.chdir(serverDir);
+  execSync("pnpm prisma:migrate:dev", { stdio: "inherit" });
+  execSync("pnpm prisma:generate", { stdio: "inherit" });
+
   console.log(green("✅ Project ready!"));
   console.log();
   console.log("Next steps:");
   console.log(`  cd ${targetDir}`);
   console.log("  pnpm install");
   console.log("  pnpm dev");
-}
+};
 
 main();
