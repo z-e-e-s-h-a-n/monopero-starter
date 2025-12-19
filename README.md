@@ -6,12 +6,14 @@ A CLI package to quickly generate a **Monorepo Starter** monorepo for full-stack
 
 ## Usage
 
-```bash
-# Install globally (optional)
-pnpm add -g create-zhx-monorepo
+You can use this CLI in two ways:
 
-# Create a new project
-pnpm create-zhx-monorepo my-new-project
+```bash
+# Using pnpm create
+pnpm create zhx-monorepo my-new-project
+
+# Using pnpm dlx
+pnpm dlx create-zhx-monorepo my-new-project
 ```
 
 This will generate a ready-to-use monorepo under `my-new-project` with:
