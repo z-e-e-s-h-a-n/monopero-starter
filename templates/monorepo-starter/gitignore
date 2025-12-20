@@ -37,7 +37,7 @@ logs
 *.pem
 
 # Prisma
-/generated/prisma
+**/prisma/generated/
 
 # others
 .history
