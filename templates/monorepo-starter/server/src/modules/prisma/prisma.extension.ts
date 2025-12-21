@@ -1,10 +1,7 @@
 import { Prisma } from "@generated/prisma";
+import { SoftDeleteModels } from "./soft-delete.models";
 
-const hasDeletedAt = (model: string) => {
-  const dmmf = Prisma.dmmf.datamodel.models;
-  const m = dmmf.find((m) => m.name === model);
-  return !!m?.fields.find((f) => f.name === "deletedAt");
-};
+const hasDeletedAt = (model: string) => SoftDeleteModels.has(model);
 
 export const softDeleteExtension = Prisma.defineExtension({
   name: "softDelete",
@@ -17,7 +14,6 @@ export const softDeleteExtension = Prisma.defineExtension({
 
         if (hasDel && !force) {
           const prisma = Prisma.getExtensionContext(this);
-          console.log("prisma", prisma);
           return (prisma as any)[model].update({
             where: args.where,
             data: { deletedAt: new Date() },
@@ -33,7 +29,6 @@ export const softDeleteExtension = Prisma.defineExtension({
 
         if (hasDel && !force) {
           const prisma = Prisma.getExtensionContext(this);
-          console.log("prisma", prisma);
           return (prisma as any)[model].updateMany({
             where: args.where,
             data: { deletedAt: new Date() },
@@ -45,16 +40,11 @@ export const softDeleteExtension = Prisma.defineExtension({
 
       async $allOperations({ model, operation, args, query }) {
         const hasDel = hasDeletedAt(model);
-        const _args = args as Record<string, any>;
-        const targetOps = [
-          "findUnique",
-          "findFirst",
-          "findMany",
-          "count",
-          "aggregate",
-        ];
+        const _args = { ...(args as Record<string, any>) };
+        const targetOps = ["findFirst", "findMany", "count", "aggregate"];
 
         if (!targetOps.includes(operation) || !hasDel) return query(args);
+
         if (_args.includeDeleted) {
           delete _args.includeDeleted;
           return query(_args);
