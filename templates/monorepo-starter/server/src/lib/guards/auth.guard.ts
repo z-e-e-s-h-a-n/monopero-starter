@@ -58,6 +58,8 @@ export class AuthGuard implements CanActivate {
       });
       return true;
     } catch (err) {
+      if (err instanceof UnauthorizedException) throw err;
+
       if (!refreshToken)
         throw new UnauthorizedException("Refresh token is missing");
 
@@ -81,9 +83,9 @@ export class AuthGuard implements CanActivate {
         });
 
         return true;
-      } catch {
+      } catch (err) {
+        if (err instanceof UnauthorizedException) throw err;
         this.logger.warn(`Access denied: Missing or invalid token`);
-
         throw new UnauthorizedException(
           "Unauthorized: Invalid or expired token."
         );

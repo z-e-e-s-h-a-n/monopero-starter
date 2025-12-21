@@ -15,6 +15,7 @@
       "@schemas/*": ["src/lib/schemas/*"],
       "@templates/*": ["src/lib/templates/*"],
       "@utils/*": ["src/lib/utils/*"],
+      "@constants/*": ["src/lib/constants/*"],
       "@generated/prisma": ["./prisma/generated/client"]
     }
   },

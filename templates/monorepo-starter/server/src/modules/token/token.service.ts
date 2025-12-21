@@ -95,11 +95,10 @@ export class TokenService {
   }
 
   async createAuthSession(req: Request, res: Response, user: Express.User) {
-    const tokens = await this.generateTokens(req, {
-      sub: user.id,
-      roles: user.roles,
-    });
+    const payload = { sub: user.id, roles: user.roles };
+    const tokens = await this.generateTokens(req, payload);
     this.setAuthCookies(res, tokens);
+    this.attachDecodedUser(req, payload);
     return tokens;
   }
 

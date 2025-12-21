@@ -61,17 +61,17 @@ export class AuthService {
       },
     });
 
-    await this.otpService.sendOtp({
-      userId: newUser.id,
-      identifier: value,
-      purpose: "verifyIdentifier",
-      metadata: { user: newUser },
-    });
-
     await this.notifyService.sendNotification({
       userId: newUser.id,
       purpose: "signup",
       to: value,
+      metadata: { user: newUser },
+    });
+
+    await this.otpService.sendOtp({
+      userId: newUser.id,
+      identifier: value,
+      purpose: "verifyIdentifier",
       metadata: { user: newUser },
     });
 
@@ -203,7 +203,7 @@ export class AuthService {
       if (dto.purpose === "setPassword" && user.password) {
         throw new BadRequestException(
           "Password already set. Use resetPassword."
-        );
+        ); // TODO i don't thing this check need
       } else if (dto.purpose === "resetPassword" && !user.password) {
         throw new BadRequestException("No password set. Use setPassword.");
       }
@@ -377,7 +377,7 @@ export class AuthService {
   }
 
   async changeIdentifierReq(dto: ChangeIdentifierDto) {
-    const { user } = await this.findUserByIdentifier(dto.identifier);
+    const { user, value } = await this.findUserByIdentifier(dto.identifier);
 
     const {
       key: newKey,
@@ -408,7 +408,8 @@ export class AuthService {
       userId: user.id,
       identifier: newValue,
       purpose: dto.purpose,
-      metadata: { user },
+      type: "token",
+      metadata: { user, identifier: value, newIdentifier: newValue },
     });
 
     this.logger.log("🔄 Identifier change requested", {
